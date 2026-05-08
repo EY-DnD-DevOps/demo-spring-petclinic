@@ -9529,4 +9529,418 @@ strong {
     margin-top: 10px;
     margin-bottom: 30px; } }
 
+/* ============================================================
+   PetClinic Modern Redesign
+   ============================================================ */
+
+:root {
+  --pc-primary:       #2e7d32;
+  --pc-primary-light: #60ad5e;
+  --pc-primary-dark:  #1b5e20;
+  --pc-bg:            #f4f7f4;
+  --pc-card-shadow:   0 2px 12px rgba(0,0,0,0.08);
+  --pc-radius:        14px;
+  --pc-radius-sm:     8px;
+}
+
+/* ---- Global ---- */
+body {
+  background-color: var(--pc-bg);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+  color: #212529;
+}
+
+/* ---- Navbar ---- */
+.navbar {
+  background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 60%, #43a047 100%) !important;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.18) !important;
+  padding-top: 0.6rem !important;
+  padding-bottom: 0.6rem !important;
+}
+.navbar a.navbar-brand,
+.navbar a:hover.navbar-brand,
+.navbar a:focus.navbar-brand {
+  background: none !important;
+  background-image: none !important;
+  width: auto !important;
+  height: auto !important;
+  display: flex !important;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #fff !important;
+  letter-spacing: 0.02em;
+  margin: 0 !important;
+}
+.navbar a.navbar-brand span,
+.navbar a:hover.navbar-brand span {
+  background: none !important;
+  background-image: none !important;
+  width: auto !important;
+  height: auto !important;
+  opacity: 1 !important;
+  display: inline !important;
+}
+@media (max-width: 768px) {
+  .navbar a.navbar-brand,
+  .navbar a:hover.navbar-brand {
+    background: none !important;
+    background-image: none !important;
+    width: auto !important;
+    height: auto !important;
+  }
+  .navbar a.navbar-brand span,
+  .navbar a:hover.navbar-brand span {
+    display: inline !important;
+    background: none !important;
+    background-image: none !important;
+  }
+}
+.navbar li > a,
+.nav-link {
+  color: rgba(255,255,255,0.88) !important;
+  font-weight: 500;
+  font-size: 0.95rem !important;
+  letter-spacing: 0.03em;
+  padding: 0.45rem 0.9rem !important;
+  border-radius: 6px;
+  transition: background 0.18s, color 0.18s;
+  text-transform: none !important;
+  font-family: inherit !important;
+}
+.navbar li:hover > a,
+.nav-link:hover,
+.nav-link.active {
+  color: #fff !important;
+  background-color: rgba(255,255,255,0.18) !important;
+}
+
+/* ---- Page container ---- */
+.container-fluid > .container.xd-container {
+  background: transparent;
+  margin-top: 2rem;
+  margin-bottom: 3rem;
+}
+
+/* ---- Section headings ---- */
+.pc-section-title {
+  font-weight: 700;
+  color: var(--pc-primary-dark);
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 3px solid var(--pc-primary-light);
+  display: inline-block;
+}
+
+/* ---- Cards ---- */
+.pc-card {
+  background: #fff;
+  border-radius: var(--pc-radius);
+  box-shadow: var(--pc-card-shadow);
+  padding: 2rem;
+  margin-bottom: 1.75rem;
+}
+.pc-card-header {
+  background: linear-gradient(135deg, var(--pc-primary-dark), var(--pc-primary));
+  color: #fff;
+  padding: 1rem 1.5rem;
+  border-radius: var(--pc-radius) var(--pc-radius) 0 0;
+  font-size: 1.15rem;
+  font-weight: 600;
+}
+.pc-card-body {
+  background: #fff;
+  border-radius: 0 0 var(--pc-radius) var(--pc-radius);
+  box-shadow: var(--pc-card-shadow);
+  padding: 1.75rem;
+}
+
+/* ---- Tables ---- */
+.table-modern {
+  background: #fff;
+  border-radius: var(--pc-radius);
+  box-shadow: var(--pc-card-shadow);
+  overflow: hidden;
+  border: none !important;
+  width: 100%;
+}
+.table-modern thead tr {
+  background: linear-gradient(135deg, var(--pc-primary-dark), var(--pc-primary));
+}
+.table-modern thead th {
+  color: #fff !important;
+  border: none !important;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 0.9rem 1.25rem;
+  white-space: nowrap;
+}
+.table-modern tbody tr {
+  transition: background 0.15s;
+}
+.table-modern tbody tr:hover {
+  background-color: #f1f8e9 !important;
+}
+.table-modern tbody td {
+  padding: 0.85rem 1.25rem;
+  vertical-align: middle;
+  border-color: #e8f5e9 !important;
+}
+
+/* ---- Buttons ---- */
+.btn-primary {
+  background: linear-gradient(135deg, var(--pc-primary), #388e3c) !important;
+  border: 1px solid transparent !important;
+  border-radius: var(--pc-radius-sm) !important;
+  font-weight: 500;
+  padding: 0.5rem 1.4rem !important;
+  box-shadow: 0 2px 5px rgba(46,125,50,0.3) !important;
+  transition: transform 0.15s, box-shadow 0.15s !important;
+}
+.btn-primary:hover {
+  background: linear-gradient(135deg, var(--pc-primary-dark), var(--pc-primary)) !important;
+  box-shadow: 0 4px 10px rgba(46,125,50,0.4) !important;
+  transform: translateY(-1px);
+}
+.btn-outline-primary {
+  color: var(--pc-primary) !important;
+  border-color: var(--pc-primary) !important;
+  border-radius: var(--pc-radius-sm) !important;
+  font-weight: 500;
+  padding: 0.5rem 1.4rem !important;
+  transition: transform 0.15s, box-shadow 0.15s !important;
+}
+.btn-outline-primary:hover,
+.btn-outline-primary:focus {
+  background: var(--pc-primary) !important;
+  border-color: var(--pc-primary) !important;
+  color: #fff !important;
+  box-shadow: 0 4px 10px rgba(46,125,50,0.3) !important;
+  transform: translateY(-1px);
+}
+.btn-outline-secondary {
+  border-color: #ced4da;
+  color: #495057;
+  border-radius: var(--pc-radius-sm) !important;
+}
+
+/* ---- Forms ---- */
+.form-control {
+  border-radius: var(--pc-radius-sm);
+  border-color: #c8e6c9;
+  transition: border-color 0.18s, box-shadow 0.18s;
+}
+.form-control:focus {
+  border-color: var(--pc-primary);
+  box-shadow: 0 0 0 0.2rem rgba(46,125,50,0.2);
+}
+.form-select {
+  border-radius: var(--pc-radius-sm);
+  border-color: #c8e6c9;
+}
+.form-select:focus {
+  border-color: var(--pc-primary);
+  box-shadow: 0 0 0 0.2rem rgba(46,125,50,0.2);
+}
+.col-form-label {
+  font-weight: 600;
+  color: #495057;
+}
+
+/* ---- Alerts ---- */
+.alert-success {
+  background-color: #e8f5e9 !important;
+  border-color: #a5d6a7 !important;
+  color: var(--pc-primary-dark) !important;
+  border-radius: var(--pc-radius-sm) !important;
+}
+.alert-danger {
+  background-color: #ffebee !important;
+  border-color: #ef9a9a !important;
+  color: #b71c1c !important;
+  border-radius: var(--pc-radius-sm) !important;
+}
+
+/* ---- Welcome hero ---- */
+.pc-hero {
+  background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 55%, #43a047 100%);
+  color: #fff;
+  border-radius: var(--pc-radius);
+  padding: 3rem 2.5rem;
+  margin-bottom: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+.pc-hero::after {
+  content: '';
+  position: absolute;
+  top: -60px;
+  right: -60px;
+  width: 280px;
+  height: 280px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 50%;
+  pointer-events: none;
+}
+.pc-hero h2 {
+  color: #fff;
+  border-bottom: 3px solid rgba(255,255,255,0.4);
+  font-size: 2.2rem;
+  font-weight: 700;
+  display: inline-block;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.4rem;
+}
+.pc-hero p {
+  color: rgba(255,255,255,0.85);
+  font-size: 1.1rem;
+  margin-bottom: 0;
+}
+.pc-hero-img {
+  border-radius: var(--pc-radius);
+  box-shadow: 0 6px 24px rgba(0,0,0,0.18);
+  max-width: 100%;
+}
+
+/* ---- Specialty badges ---- */
+.badge-specialty {
+  background-color: #e8f5e9;
+  color: var(--pc-primary-dark);
+  border: 1px solid #c8e6c9;
+  border-radius: 20px;
+  padding: 0.2em 0.7em;
+  font-size: 0.82em;
+  font-weight: 500;
+  display: inline-block;
+  margin: 0.15em 0.1em;
+}
+
+/* ---- Owner / Pet detail cards ---- */
+.info-label {
+  color: #6c757d;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 600;
+  margin-bottom: 0.15rem;
+}
+.info-value {
+  font-weight: 500;
+  color: #212529;
+  font-size: 0.97rem;
+}
+.pet-card {
+  background: #fff;
+  border-radius: var(--pc-radius);
+  box-shadow: var(--pc-card-shadow);
+  border-left: 5px solid var(--pc-primary-light);
+  margin-bottom: 1.25rem;
+  overflow: hidden;
+}
+.pet-card-header {
+  background: #f1f8e9;
+  padding: 0.75rem 1.25rem;
+  border-bottom: 1px solid #e8f5e9;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 700;
+  color: var(--pc-primary-dark);
+}
+.pet-card-body {
+  padding: 1rem 1.25rem;
+}
+.visit-table {
+  width: 100%;
+  font-size: 0.9rem;
+}
+.visit-table th {
+  font-weight: 600;
+  color: #6c757d;
+  padding: 0.4rem 0.6rem;
+  border-bottom: 2px solid #e8f5e9;
+  white-space: nowrap;
+}
+.visit-table td {
+  padding: 0.45rem 0.6rem;
+  border-bottom: 1px solid #f1f8e9;
+  vertical-align: middle;
+}
+.visit-table tr:last-child td {
+  border-bottom: none;
+}
+.visit-action-link {
+  color: var(--pc-primary);
+  font-weight: 500;
+  text-decoration: none;
+  font-size: 0.85rem;
+}
+.visit-action-link:hover {
+  color: var(--pc-primary-dark);
+  text-decoration: underline;
+}
+
+/* ---- Pagination ---- */
+.pc-pagination {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+}
+.pc-pagination a,
+.pc-pagination .pc-page-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: all 0.18s;
+  padding: 0 0.5rem;
+}
+.pc-pagination a {
+  background: #fff;
+  color: var(--pc-primary);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+.pc-pagination a:hover {
+  background: var(--pc-primary);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(46,125,50,0.35);
+}
+.pc-pagination .pc-page-current {
+  background: var(--pc-primary);
+  color: #fff;
+  box-shadow: 0 2px 6px rgba(46,125,50,0.35);
+}
+.pc-pagination .pc-page-num {
+  color: #6c757d;
+}
+
+/* ---- Footer ---- */
+.pc-footer {
+  display: block !important;
+  width: 100% !important;
+  background: var(--pc-primary-dark) !important;
+  background-color: #1b5e20 !important;
+  color: rgba(255,255,255,0.65) !important;
+  text-align: center !important;
+  padding: 1.1rem !important;
+  font-size: 0.85rem;
+  margin-top: 3rem;
+}
+
+/* ---- Logo ---- */
+.logo {
+  max-width: 110px;
+  opacity: 0.65;
+  transition: opacity 0.2s;
+}
+.logo:hover { opacity: 1; }
+
 /*# sourceMappingURL=../../../../../../target/petclinic.css.map */

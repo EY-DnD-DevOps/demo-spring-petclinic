@@ -4,22 +4,27 @@
 
 <body>
 
-  <h2 th:text="#{owner}">Owner</h2>
-  <form th:object="${owner}" class="form-horizontal" id="add-owner-form" method="post">
-    <div class="form-group has-feedback">
-      <input th:replace="~{fragments/inputField :: input (#{firstName}, 'firstName', 'text')}" />
-      <input th:replace="~{fragments/inputField :: input (#{lastName}, 'lastName', 'text')}" />
-      <input th:replace="~{fragments/inputField :: input (#{address}, 'address', 'text')}" />
-      <input th:replace="~{fragments/inputField :: input (#{city}, 'city', 'text')}" />
-      <input th:replace="~{fragments/inputField :: input (#{telephone}, 'telephone', 'text')}" />
-    </div>
-    <div class="form-group">
-      <div class="col-sm-offset-2 col-sm-10">
-        <button th:with="text=${owner['new']} ? #{addOwner} : #{updateOwner}" class="btn btn-primary" type="submit"
-          th:text="${text}">Add Owner</button>
+  <h2 class="pc-section-title">
+    <span class="fa fa-user me-2" aria-hidden="true"></span>
+    <span th:text="#{owner}">Owner</span>
+  </h2>
+
+  <div class="pc-card" style="max-width: 680px;">
+    <form th:object="${owner}" class="row g-0" id="add-owner-form" method="post">
+      <div class="col-12">
+        <input th:replace="~{fragments/inputField :: input (#{firstName}, 'firstName', 'text')}" />
+        <input th:replace="~{fragments/inputField :: input (#{lastName}, 'lastName', 'text')}" />
+        <input th:replace="~{fragments/inputField :: input (#{address}, 'address', 'text')}" />
+        <input th:replace="~{fragments/inputField :: input (#{city}, 'city', 'text')}" />
+        <input th:replace="~{fragments/inputField :: input (#{telephone}, 'telephone', 'text')}" />
       </div>
-    </div>
-  </form>
+      <div class="col-12 d-flex justify-content-end mt-2">
+        <button th:with="text=${owner['new']} ? #{addOwner} : #{updateOwner}"
+          class="btn btn-primary" type="submit" th:text="${text}">Add Owner</button>
+      </div>
+    </form>
+  </div>
+
 </body>
 
 </html>

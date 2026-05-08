@@ -4,31 +4,44 @@
 
 <body>
 
-  <h2 th:text="#{findOwners}">Find Owners</h2>
+  <h2 class="pc-section-title">
+    <span class="fa fa-search me-2" aria-hidden="true"></span>
+    <span th:text="#{findOwners}">Find Owners</span>
+  </h2>
 
-  <form th:object="${owner}" th:action="@{/owners}" method="get" class="form-horizontal" id="search-owner-form">
-    <div class="form-group">
-      <div class="control-group" id="lastNameGroup">
-        <label class="col-sm-2 control-label" th:text="#{lastName}">Last name </label>
-        <div class="col-sm-10">
-          <input class="form-control" th:field="*{lastName}" size="30" maxlength="80" />
-          <span class="help-inline">
-            <div th:if="${#fields.hasAnyErrors()}">
-              <p th:each="err : ${#fields.allErrors()}" th:text="${err}">Error</p>
-            </div>
+  <div class="pc-card" style="max-width: 640px;">
+    <form th:object="${owner}" th:action="@{/owners}" method="get" id="search-owner-form">
+      <div th:with="hasError=${#fields.hasAnyErrors()}"
+        th:class="${hasError ? 'mb-3 has-validation' : 'mb-3'}"
+        class="mb-3">
+        <label for="lastName" class="form-label fw-semibold" th:text="#{lastName}">Last name</label>
+        <div class="input-group">
+          <span class="input-group-text bg-white" style="border-color:#c8e6c9;">
+            <span class="fa fa-user" style="color: var(--pc-primary);"></span>
           </span>
+          <input class="form-control" th:field="*{lastName}" id="lastName"
+            th:class="${#fields.hasErrors('lastName') ? 'form-control is-invalid' : 'form-control'}"
+            th:placeholder="#{lastNamePlaceholder}" size="30" maxlength="80" />
+          <th:block th:if="${#fields.hasAnyErrors()}">
+            <div class="invalid-feedback d-block">
+              <span th:each="err : ${#fields.allErrors()}" th:text="${err}">Error</span>
+            </div>
+          </th:block>
         </div>
       </div>
-    </div>
-    <div class="form-group">
-      <div class="col-sm-offset-2 col-sm-10">
-        <button type="submit" class="btn btn-primary" th:text="#{findOwner}">Find Owner</button>
+      <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-primary">
+          <span class="fa fa-search me-1" aria-hidden="true"></span>
+          <span th:text="#{findOwner}">Find Owner</span>
+        </button>
+        <button type="button" class="btn btn-primary"
+          th:onclick="|window.location.href='@{/owners/new}'|">
+          <span class="fa fa-plus me-1" aria-hidden="true"></span>
+          <span th:text="#{addOwner}">Add Owner</span>
+        </button>
       </div>
-    </div>
-
-    <a class="btn btn-primary" th:href="@{/owners/new}" th:text="#{addOwner}">Add Owner</a>
-
-  </form>
+    </form>
+  </div>
 
 </body>
 
