@@ -34,10 +34,11 @@
           <span class="fa fa-search me-1" aria-hidden="true"></span>
           <span th:text="#{findOwner}">Find Owner</span>
         </button>
-        <a class="btn btn-outline-primary" th:href="@{/owners/new}">
+        <button type="button" class="btn btn-outline-primary"
+          th:onclick="|window.location.href='@{/owners/new}'|">
           <span class="fa fa-plus me-1" aria-hidden="true"></span>
           <span th:text="#{addOwner}">Add Owner</span>
-        </a>
+        </button>
       </div>
     </form>
   </div>
