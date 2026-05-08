@@ -9943,4 +9943,33 @@ body {
 }
 .logo:hover { opacity: 1; }
 
+/* ---- Language Switcher ---- */
+.pc-lang-toggle {
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: rgba(255,255,255,0.9) !important;
+}
+.pc-lang-menu {
+  min-width: 140px;
+  border-radius: var(--pc-radius-sm);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+  border: 1px solid rgba(46,125,50,0.2);
+  padding: 0.3rem 0;
+}
+.pc-lang-menu .lang-item {
+  padding: 0.45rem 1rem;
+  font-size: 0.9rem;
+  color: #333;
+  transition: background 0.15s, color 0.15s;
+}
+.pc-lang-menu .lang-item:hover {
+  background-color: rgba(46,125,50,0.1);
+  color: var(--pc-primary);
+}
+.pc-lang-menu .lang-item.active {
+  background-color: var(--pc-primary) !important;
+  color: #fff !important;
+  font-weight: 600;
+}
+
 /*# sourceMappingURL=../../../../../../target/petclinic.css.map */
