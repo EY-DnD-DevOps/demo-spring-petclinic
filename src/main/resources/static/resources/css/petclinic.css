@@ -9557,8 +9557,11 @@ body {
   padding-top: 0.6rem !important;
   padding-bottom: 0.6rem !important;
 }
-.navbar a.navbar-brand {
+.navbar a.navbar-brand,
+.navbar a:hover.navbar-brand,
+.navbar a:focus.navbar-brand {
   background: none !important;
+  background-image: none !important;
   width: auto !important;
   height: auto !important;
   display: flex !important;
@@ -9568,13 +9571,31 @@ body {
   font-weight: 700;
   color: #fff !important;
   letter-spacing: 0.02em;
+  margin: 0 !important;
 }
-.navbar a.navbar-brand span {
+.navbar a.navbar-brand span,
+.navbar a:hover.navbar-brand span {
   background: none !important;
+  background-image: none !important;
   width: auto !important;
   height: auto !important;
   opacity: 1 !important;
   display: inline !important;
+}
+@media (max-width: 768px) {
+  .navbar a.navbar-brand,
+  .navbar a:hover.navbar-brand {
+    background: none !important;
+    background-image: none !important;
+    width: auto !important;
+    height: auto !important;
+  }
+  .navbar a.navbar-brand span,
+  .navbar a:hover.navbar-brand span {
+    display: inline !important;
+    background: none !important;
+    background-image: none !important;
+  }
 }
 .navbar li > a,
 .nav-link {
@@ -9887,10 +9908,13 @@ body {
 
 /* ---- Footer ---- */
 .pc-footer {
-  background: var(--pc-primary-dark);
-  color: rgba(255,255,255,0.65);
-  text-align: center;
-  padding: 1.1rem;
+  display: block !important;
+  width: 100% !important;
+  background: var(--pc-primary-dark) !important;
+  background-color: #1b5e20 !important;
+  color: rgba(255,255,255,0.65) !important;
+  text-align: center !important;
+  padding: 1.1rem !important;
   font-size: 0.85rem;
   margin-top: 3rem;
 }
