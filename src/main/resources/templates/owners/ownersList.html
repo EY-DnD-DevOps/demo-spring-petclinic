@@ -26,9 +26,9 @@
             <a th:href="@{/owners/__${owner.id}__}" th:text="${owner.firstName + ' ' + owner.lastName}"
               style="color: var(--pc-primary); font-weight:500; text-decoration:none;"></a>
           </td>
-          <td th:text="${owner.address}" />
-          <td th:text="${owner.city}" />
-          <td th:text="${owner.telephone}" />
+          <td th:text="${owner.address}"></td>
+          <td th:text="${owner.city}"></td>
+          <td th:text="${owner.telephone}"></td>
           <td>
             <span th:each="pet,iterStat : ${owner.pets}">
               <span class="badge-specialty" th:text="${pet.name}"></span>
@@ -40,13 +40,15 @@
   </div>
 
   <div th:if="${totalPages > 1}" class="pc-pagination">
-    <a th:if="${currentPage > 1}" th:href="@{'/owners?page=1'}" th:title="#{first}">
+    <a th:if="${currentPage > 1}" th:href="@{'/owners?page=1'}"
+      th:title="#{first}" th:attr="aria-label=#{first}">
       <span class="fa fa-fast-backward" aria-hidden="true"></span>
     </a>
     <span th:unless="${currentPage > 1}" class="pc-page-num">
       <span class="fa fa-fast-backward" aria-hidden="true"></span>
     </span>
-    <a th:if="${currentPage > 1}" th:href="@{'/owners?page=__${currentPage - 1}__'}" th:title="#{previous}">
+    <a th:if="${currentPage > 1}" th:href="@{'/owners?page=__${currentPage - 1}__'}"
+      th:title="#{previous}" th:attr="aria-label=#{previous}">
       <span class="fa fa-step-backward" aria-hidden="true"></span>
     </a>
     <span th:unless="${currentPage > 1}" class="pc-page-num">
@@ -58,13 +60,15 @@
       <span th:unless="${currentPage != i}" class="pc-page-current" th:text="${i}"></span>
     </th:block>
 
-    <a th:if="${currentPage < totalPages}" th:href="@{'/owners?page=__${currentPage + 1}__'}" th:title="#{next}">
+    <a th:if="${currentPage < totalPages}" th:href="@{'/owners?page=__${currentPage + 1}__'}"
+      th:title="#{next}" th:attr="aria-label=#{next}">
       <span class="fa fa-step-forward" aria-hidden="true"></span>
     </a>
     <span th:unless="${currentPage < totalPages}" class="pc-page-num">
       <span class="fa fa-step-forward" aria-hidden="true"></span>
     </span>
-    <a th:if="${currentPage < totalPages}" th:href="@{'/owners?page=__${totalPages}__'}" th:title="#{last}">
+    <a th:if="${currentPage < totalPages}" th:href="@{'/owners?page=__${totalPages}__'}"
+      th:title="#{last}" th:attr="aria-label=#{last}">
       <span class="fa fa-fast-forward" aria-hidden="true"></span>
     </a>
     <span th:unless="${currentPage < totalPages}" class="pc-page-num">

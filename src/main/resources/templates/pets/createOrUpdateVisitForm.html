@@ -67,9 +67,9 @@
           </tr>
         </thead>
         <tbody>
-          <tr th:if="${!visit['new']}" th:each="visit : ${pet.visits}">
-            <td th:text="${#temporals.format(visit.date, 'yyyy-MM-dd')}"></td>
-            <td th:text="${visit.description}"></td>
+          <tr th:if="${!visit['new']}" th:each="petVisit : ${pet.visits}">
+            <td th:text="${#temporals.format(petVisit.date, 'yyyy-MM-dd')}"></td>
+            <td th:text="${petVisit.description}"></td>
           </tr>
         </tbody>
       </table>
