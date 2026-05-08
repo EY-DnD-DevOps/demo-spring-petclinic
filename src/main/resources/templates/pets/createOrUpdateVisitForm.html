@@ -4,55 +4,77 @@
 
 <body>
 
-  <h2>
+  <h2 class="pc-section-title">
+    <span class="fa fa-calendar me-2" aria-hidden="true"></span>
     <th:block th:if="${visit['new']}" th:text="#{new}">New </th:block>
     Visit
   </h2>
 
-  <b th:text="#{pet}">Pet</b>
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th th:text="#{name}">Name</th>
-        <th th:text="#{birthDate}">Birth Date</th>
-        <th th:text="#{type}">Type</th>
-        <th th:text="#{owner}">Owner</th>
-      </tr>
-    </thead>
-    <tr>
-      <td th:text="${pet.name}"></td>
-      <td th:text="${#temporals.format(pet.birthDate, 'yyyy-MM-dd')}"></td>
-      <td th:text="${pet.type}"></td>
-      <td th:text="${owner?.firstName + ' ' + owner?.lastName}"></td>
-    </tr>
-  </table>
-
-  <form th:object="${visit}" class="form-horizontal" method="post">
-    <div class="form-group has-feedback">
-      <input th:replace="~{fragments/inputField :: input ('Date', 'date', 'date')}" />
-      <input th:replace="~{fragments/inputField :: input ('Description', 'description', 'text')}" />
+  <!-- Pet info card -->
+  <div class="pc-card mb-4" style="max-width: 680px;">
+    <div class="pc-card-header">
+      <span class="fa fa-paw me-2" aria-hidden="true"></span>
+      <span th:text="#{pet}">Pet</span>
     </div>
+    <div class="pc-card-body">
+      <div class="row g-3">
+        <div class="col-sm-3">
+          <div class="info-label" th:text="#{name}">Name</div>
+          <div class="info-value" th:text="${pet.name}"></div>
+        </div>
+        <div class="col-sm-3">
+          <div class="info-label" th:text="#{birthDate}">Birth Date</div>
+          <div class="info-value" th:text="${#temporals.format(pet.birthDate, 'yyyy-MM-dd')}"></div>
+        </div>
+        <div class="col-sm-3">
+          <div class="info-label" th:text="#{type}">Type</div>
+          <div class="info-value"><span class="badge-specialty" th:text="${pet.type}"></span></div>
+        </div>
+        <div class="col-sm-3">
+          <div class="info-label" th:text="#{owner}">Owner</div>
+          <div class="info-value" th:text="${owner?.firstName + ' ' + owner?.lastName}"></div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-    <div class="form-group">
-      <div class="col-sm-offset-2 col-sm-10">
+  <!-- Visit form -->
+  <div class="pc-card" style="max-width: 680px;">
+    <form th:object="${visit}" class="row g-0" method="post">
+      <div class="col-12">
+        <input th:replace="~{fragments/inputField :: input ('Date', 'date', 'date')}" />
+        <input th:replace="~{fragments/inputField :: input ('Description', 'description', 'text')}" />
+      </div>
+      <div class="col-12 d-flex justify-content-end mt-2">
         <input type="hidden" name="petId" th:value="${pet.id}" />
         <button class="btn btn-primary" type="submit" th:text="#{addVisit}">Add Visit</button>
       </div>
-    </div>
-  </form>
+    </form>
+  </div>
 
-  <br />
-  <b th:text="#{previousVisits}">Previous Visits</b>
-  <table class="table table-striped">
-    <tr>
-      <th th:text="#{date}">Date</th>
-      <th th:text="#{description}">Description</th>
-    </tr>
-    <tr th:if="${!visit['new']}" th:each="visit : ${pet.visits}">
-      <td th:text="${#temporals.format(visit.date, 'yyyy-MM-dd')}"></td>
-      <td th:text=" ${visit.description}"></td>
-    </tr>
-  </table>
+  <!-- Previous visits -->
+  <div th:if="${!pet.visits.isEmpty()}" class="mt-4" style="max-width: 680px;">
+    <h2 class="pc-section-title">
+      <span class="fa fa-history me-2" aria-hidden="true"></span>
+      <span th:text="#{previousVisits}">Previous Visits</span>
+    </h2>
+    <div style="overflow-x: auto;">
+      <table class="table-modern table">
+        <thead>
+          <tr>
+            <th th:text="#{date}">Date</th>
+            <th th:text="#{description}">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:if="${!visit['new']}" th:each="visit : ${pet.visits}">
+            <td th:text="${#temporals.format(visit.date, 'yyyy-MM-dd')}"></td>
+            <td th:text="${visit.description}"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 
 </body>
 

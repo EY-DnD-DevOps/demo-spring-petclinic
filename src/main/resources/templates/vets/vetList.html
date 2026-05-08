@@ -4,54 +4,66 @@
 
 <body>
 
-  <h2 th:text="#{vets}">Veterinarians</h2>
+  <h2 class="pc-section-title">
+    <span class="fa fa-stethoscope me-2" aria-hidden="true"></span>
+    <span th:text="#{vets}">Veterinarians</span>
+  </h2>
 
-  <table id="vets" class="table table-striped">
-    <thead>
-      <tr>
-        <th th:text="#{name}">Name</th>
-        <th th:text="#{specialties}">Specialties</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr th:each="vet : ${listVets}">
-        <td th:text="${vet.firstName + ' ' + vet.lastName}"></td>
-        <td>
-          <span th:each="specialty : ${vet.specialties}" th:text="${specialty.name + ' '}" /> <span
-            th:if="${vet.nrOfSpecialties == 0}" th:text="#{none}">none</span>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  <div th:if="${totalPages > 1}">
-    <span th:text="#{pages}">Pages:</span>
-    <span>[</span>
-    <span th:each="i: ${#numbers.sequence(1, totalPages)}">
-      <a th:if="${currentPage != i}" th:href="@{'/vets.html?page=__${i}__'}">[[${i}]]</a>
-      <span th:unless="${currentPage != i}">[[${i}]]</span>
+  <div style="overflow-x: auto;">
+    <table id="vets" class="table-modern table">
+      <thead>
+        <tr>
+          <th th:text="#{name}">Name</th>
+          <th th:text="#{specialties}">Specialties</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="vet : ${listVets}">
+          <td style="font-weight:500;" th:text="${vet.firstName + ' ' + vet.lastName}"></td>
+          <td>
+            <th:block th:if="${vet.nrOfSpecialties > 0}">
+              <span th:each="specialty : ${vet.specialties}" class="badge-specialty" th:text="${specialty.name}"></span>
+            </th:block>
+            <span th:if="${vet.nrOfSpecialties == 0}" class="text-muted" th:text="#{none}">none</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div th:if="${totalPages > 1}" class="pc-pagination">
+    <a th:if="${currentPage > 1}" th:href="@{'/vets.html?page=1'}" th:title="#{first}">
+      <span class="fa fa-fast-backward" aria-hidden="true"></span>
+    </a>
+    <span th:unless="${currentPage > 1}" class="pc-page-num">
+      <span class="fa fa-fast-backward" aria-hidden="true"></span>
     </span>
-    <span>]&nbsp;</span>
-    <span>
-      <a th:if="${currentPage > 1}" th:href="@{'/vets.html?page=1'}" th:title="#{first}"
-        class="fa fa-fast-backward"></a>
-      <span th:unless="${currentPage > 1}" th:title="#{first}" class="fa fa-fast-backward"></span>
+    <a th:if="${currentPage > 1}" th:href="@{'/vets.html?page=__${currentPage - 1}__'}" th:title="#{previous}">
+      <span class="fa fa-step-backward" aria-hidden="true"></span>
+    </a>
+    <span th:unless="${currentPage > 1}" class="pc-page-num">
+      <span class="fa fa-step-backward" aria-hidden="true"></span>
     </span>
-    <span>
-      <a th:if="${currentPage > 1}" th:href="@{'/vets.html?page=__${currentPage - 1}__'}" th:title="#{previous}"
-        class="fa fa-step-backward"></a>
-      <span th:unless="${currentPage > 1}" th:title="#{previous}" class="fa fa-step-backward"></span>
+
+    <th:block th:each="i: ${#numbers.sequence(1, totalPages)}">
+      <a th:if="${currentPage != i}" th:href="@{'/vets.html?page=__${i}__'}" th:text="${i}"></a>
+      <span th:unless="${currentPage != i}" class="pc-page-current" th:text="${i}"></span>
+    </th:block>
+
+    <a th:if="${currentPage < totalPages}" th:href="@{'/vets.html?page=__${currentPage + 1}__'}" th:title="#{next}">
+      <span class="fa fa-step-forward" aria-hidden="true"></span>
+    </a>
+    <span th:unless="${currentPage < totalPages}" class="pc-page-num">
+      <span class="fa fa-step-forward" aria-hidden="true"></span>
     </span>
-    <span>
-      <a th:if="${currentPage < totalPages}" th:href="@{'/vets.html?page=__${currentPage + 1}__'}" th:title="#{next}"
-        class="fa fa-step-forward"></a>
-      <span th:unless="${currentPage < totalPages}" th:title="#{next}" class="fa fa-step-forward"></span>
-    </span>
-    <span>
-      <a th:if="${currentPage < totalPages}" th:href="@{'/vets.html?page=__${totalPages}__'}" th:title="#{last}"
-        class="fa fa-fast-forward"></a>
-      <span th:unless="${currentPage < totalPages}" th:title="#{last}" class="fa fa-fast-forward"></span>
+    <a th:if="${currentPage < totalPages}" th:href="@{'/vets.html?page=__${totalPages}__'}" th:title="#{last}">
+      <span class="fa fa-fast-forward" aria-hidden="true"></span>
+    </a>
+    <span th:unless="${currentPage < totalPages}" class="pc-page-num">
+      <span class="fa fa-fast-forward" aria-hidden="true"></span>
     </span>
   </div>
+
 </body>
 
 </html>
