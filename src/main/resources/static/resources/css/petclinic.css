@@ -9691,7 +9691,7 @@ body {
 /* ---- Buttons ---- */
 .btn-primary {
   background: linear-gradient(135deg, var(--pc-primary), #388e3c) !important;
-  border: none !important;
+  border: 1px solid transparent !important;
   border-radius: var(--pc-radius-sm) !important;
   font-weight: 500;
   padding: 0.5rem 1.4rem !important;
