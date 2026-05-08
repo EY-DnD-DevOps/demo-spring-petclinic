@@ -59,6 +59,66 @@
           </li>
         </ul>
 
+        <ul class="navbar-nav ms-auto align-items-center">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle pc-lang-toggle" href="#" id="langDropdown" role="button"
+              data-bs-toggle="dropdown" aria-expanded="false" th:aria-label="#{language}">
+              <span class="fa fa-globe me-1" aria-hidden="true"></span>
+              <span th:text="${#locale.language.toUpperCase()}">EN</span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end pc-lang-menu" aria-labelledby="langDropdown">
+              <li>
+                <a class="dropdown-item lang-item" href="#" data-lang="en"
+                  th:classappend="${#locale.language == 'en' ? ' active' : ''}">
+                  <span th:text="#{lang.en}">English</span>
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item lang-item" href="#" data-lang="de"
+                  th:classappend="${#locale.language == 'de' ? ' active' : ''}">
+                  <span th:text="#{lang.de}">Deutsch</span>
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item lang-item" href="#" data-lang="es"
+                  th:classappend="${#locale.language == 'es' ? ' active' : ''}">
+                  <span th:text="#{lang.es}">Español</span>
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item lang-item" href="#" data-lang="fa"
+                  th:classappend="${#locale.language == 'fa' ? ' active' : ''}">
+                  <span th:text="#{lang.fa}">فارسی</span>
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item lang-item" href="#" data-lang="ko"
+                  th:classappend="${#locale.language == 'ko' ? ' active' : ''}">
+                  <span th:text="#{lang.ko}">한국어</span>
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item lang-item" href="#" data-lang="pt"
+                  th:classappend="${#locale.language == 'pt' ? ' active' : ''}">
+                  <span th:text="#{lang.pt}">Português</span>
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item lang-item" href="#" data-lang="ru"
+                  th:classappend="${#locale.language == 'ru' ? ' active' : ''}">
+                  <span th:text="#{lang.ru}">Русский</span>
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item lang-item" href="#" data-lang="tr"
+                  th:classappend="${#locale.language == 'tr' ? ' active' : ''}">
+                  <span th:text="#{lang.tr}">Türkçe</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+
       </div>
     </div>
   </nav>
@@ -80,6 +140,17 @@
   </footer>
 
   <script th:src="@{/webjars/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
+  <script>
+    document.querySelectorAll('.lang-item').forEach(function(el) {
+      el.addEventListener('click', function(e) {
+        e.preventDefault();
+        var lang = this.getAttribute('data-lang');
+        var url = new URL(window.location.href);
+        url.searchParams.set('lang', lang);
+        window.location.href = url.toString();
+      });
+    });
+  </script>
 
 </body>
 
