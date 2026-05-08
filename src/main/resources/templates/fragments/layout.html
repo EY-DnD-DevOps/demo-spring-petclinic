@@ -136,7 +136,7 @@
   </div>
 
   <footer class="pc-footer">
-    &copy; 2025 Spring PetClinic &mdash; Built with Spring Boot &amp; Thymeleaf
+    &copy; <span th:text="${T(java.time.Year).now().value}">2025</span> Spring PetClinic &mdash; Built with Spring Boot &amp; Thymeleaf
   </footer>
 
   <script th:src="@{/webjars/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
