@@ -10,9 +10,7 @@ Comprehensive code review guidelines for GitHub Copilot that can be adapted to a
 
 ## Review Language
 
-When performing a code review, respond in **English** (or specify your preferred language).
-
-> **Customization Tip**: Change to your preferred language by replacing "English" with "Portuguese (Brazilian)", "Spanish", "French", etc.
+When performing a code review, respond in **Traditional Chinese（繁體中文）**.
 
 ## Review Priorities
 
@@ -367,34 +365,8 @@ When performing a code review, systematically verify:
 
 ## Project-Specific Customizations
 
-To customize this template for your project, add sections for:
-
-1. **Language/Framework specific checks**
-   - Example: "When performing a code review, verify React hooks follow rules of hooks"
-   - Example: "When performing a code review, check Spring Boot controllers use proper annotations"
-
-2. **Build and deployment**
-   - Example: "When performing a code review, verify CI/CD pipeline configuration is correct"
-   - Example: "When performing a code review, check database migrations are reversible"
-
-3. **Business logic rules**
-   - Example: "When performing a code review, verify pricing calculations include all applicable taxes"
-   - Example: "When performing a code review, check user consent is obtained before data processing"
-
-4. **Team conventions**
-   - Example: "When performing a code review, verify commit messages follow conventional commits format"
-   - Example: "When performing a code review, check branch names follow pattern: type/ticket-description"
-
-## Additional Resources
-
-For more information on effective code reviews and GitHub Copilot customization:
-
-- [GitHub Copilot Prompt Engineering](https://docs.github.com/en/copilot/concepts/prompting/prompt-engineering)
-- [GitHub Copilot Custom Instructions](https://code.visualstudio.com/docs/copilot/customization/custom-instructions)
-- [Awesome GitHub Copilot Repository](https://github.com/github/awesome-copilot)
-- [GitHub Code Review Guidelines](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests)
-- [Google Engineering Practices - Code Review](https://google.github.io/eng-practices/review/)
-- [OWASP Security Guidelines](https://owasp.org/)
+For project-specific checks, conventions, and business logic rules, refer to:
+[code-review-project-specific.instructions.md](code-review-project-specific.instructions.md)
 
 ## Prompt Engineering Tips
 
