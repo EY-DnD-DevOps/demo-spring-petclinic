@@ -381,8 +381,5 @@ When performing a code review, apply these prompt engineering principles from th
 
 ## Project Context
 
-- **Tech Stack**: Java 17, Spring Boot 4.x, H2 / MySQL / PostgreSQL
-- **Architecture**: Spring MVC + Thymeleaf (server-side rendering), no service layer — repositories injected directly into controllers
-- **Build Tool**: Maven (`./mvnw verify`)
-- **Testing**: JUnit 5, `@WebMvcTest` for controllers, `@DataJpaTest` for repositories
-- **Code Style**: Spring Java Format (enforced by `spring-javaformat` Maven plugin)
+For project architecture, tech stack, conventions, and build commands, refer to:
+[copilot-instructions.md](../.github/copilot-instructions.md)
