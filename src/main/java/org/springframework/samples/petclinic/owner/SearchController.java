@@ -44,15 +44,11 @@ class SearchController {
 		List<PetResult> petResults = List.of();
 
 		if (!query.isBlank()) {
-			ownerResults = owners.searchByName(query);
-
-			String lowerQuery = query.toLowerCase();
-			petResults = owners.findOwnersByPetName(query)
+			String escapedQuery = escapeWildcards(query);
+			ownerResults = owners.searchByName(escapedQuery);
+			petResults = owners.findOwnersByPetName(escapedQuery)
 				.stream()
-				.flatMap(owner -> owner.getPets()
-					.stream()
-					.filter(pet -> pet.getName().toLowerCase().contains(lowerQuery))
-					.map(pet -> new PetResult(pet, owner)))
+				.flatMap(owner -> owner.getPets().stream().map(pet -> new PetResult(pet, owner)))
 				.toList();
 		}
 
@@ -60,6 +56,10 @@ class SearchController {
 		model.addAttribute("petResults", petResults);
 		model.addAttribute("query", query);
 		return "search/searchResults";
+	}
+
+	private static String escapeWildcards(String input) {
+		return input.replace("\\", "\\\\").replace("%", "\\%").replace("_", "\\_");
 	}
 
 }

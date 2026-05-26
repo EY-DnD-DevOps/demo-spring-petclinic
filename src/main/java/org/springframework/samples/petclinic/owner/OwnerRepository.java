@@ -47,10 +47,15 @@ public interface OwnerRepository extends JpaRepository<Owner, Integer> {
 	 */
 	Page<Owner> findByLastNameStartingWith(String lastName, Pageable pageable);
 
-	@Query("SELECT DISTINCT o FROM Owner o WHERE LOWER(o.firstName) LIKE LOWER(CONCAT('%', :query, '%')) OR LOWER(o.lastName) LIKE LOWER(CONCAT('%', :query, '%'))")
+	@Query("""
+			SELECT DISTINCT o FROM Owner o \
+			WHERE LOWER(o.firstName) LIKE LOWER(CONCAT('%', :query, '%')) ESCAPE '\\' \
+			OR LOWER(o.lastName) LIKE LOWER(CONCAT('%', :query, '%')) ESCAPE '\\'""")
 	List<Owner> searchByName(@Param("query") String query);
 
-	@Query("SELECT DISTINCT o FROM Owner o JOIN o.pets p WHERE LOWER(p.name) LIKE LOWER(CONCAT('%', :petName, '%'))")
+	@Query("""
+			SELECT DISTINCT o FROM Owner o JOIN o.pets p \
+			WHERE LOWER(p.name) LIKE LOWER(CONCAT('%', :petName, '%')) ESCAPE '\\'""")
 	List<Owner> findOwnersByPetName(@Param("petName") String petName);
 
 	/**
