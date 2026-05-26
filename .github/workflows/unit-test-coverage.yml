@@ -1,0 +1,33 @@
+name: Unit Test Coverage
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  coverage:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Run Tests with Coverage
+        run: ./mvnw -B verify
+
+      - name: Upload Coverage
+        run: |
+          curl -s -X POST "http://23.100.110.236:12345/api/v1/coverage" \
+            -H "Authorization: Bearer fe8f4cfc0ec6c1bdc8d61e5d7f6407096871ba86ef163a9abb3398972f9d35e5" \
+            -F "file=@target/site/jacoco/jacoco.xml" \
+            -F "repo_name=${{ github.repository }}" \
+            -F "branch=${{ github.ref_name }}" \
+            -F "commit=${{ github.sha }}"
