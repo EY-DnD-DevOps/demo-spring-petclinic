@@ -15,11 +15,14 @@
  */
 package org.springframework.samples.petclinic.owner;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 /**
  * Repository class for <code>Owner</code> domain objects. All method names are compliant
@@ -43,6 +46,17 @@ public interface OwnerRepository extends JpaRepository<Owner, Integer> {
 	 * found)
 	 */
 	Page<Owner> findByLastNameStartingWith(String lastName, Pageable pageable);
+
+	@Query("""
+			SELECT DISTINCT o FROM Owner o \
+			WHERE LOWER(o.firstName) LIKE LOWER(CONCAT('%', :query, '%')) ESCAPE '\\' \
+			OR LOWER(o.lastName) LIKE LOWER(CONCAT('%', :query, '%')) ESCAPE '\\'""")
+	List<Owner> searchByName(@Param("query") String query);
+
+	@Query("""
+			SELECT DISTINCT o FROM Owner o JOIN o.pets p \
+			WHERE LOWER(p.name) LIKE LOWER(CONCAT('%', :petName, '%')) ESCAPE '\\'""")
+	List<Owner> findOwnersByPetName(@Param("petName") String petName);
 
 	/**
 	 * Retrieve an {@link Owner} from the data store by id.
