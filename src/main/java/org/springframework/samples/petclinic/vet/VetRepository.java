@@ -19,10 +19,13 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Repository class for <code>Vet</code> domain objects All method names are compliant
@@ -54,5 +57,18 @@ public interface VetRepository extends Repository<Vet, Integer> {
 	@Transactional(readOnly = true)
 	@Cacheable("vets")
 	Page<Vet> findAll(Pageable pageable) throws DataAccessException;
+
+	/**
+	 * Search for {@link Vet}s whose first or last name contains the given query string
+	 * (case-insensitive).
+	 * @param query the search term
+	 * @return a list of matching {@link Vet}s
+	 */
+	@Transactional(readOnly = true)
+	@Query("""
+			SELECT DISTINCT v FROM Vet v \
+			WHERE LOWER(v.firstName) LIKE LOWER(CONCAT('%', :query, '%')) ESCAPE '\\' \
+			OR LOWER(v.lastName) LIKE LOWER(CONCAT('%', :query, '%')) ESCAPE '\\'""")
+	List<Vet> searchByName(@Param("query") String query);
 
 }

@@ -22,6 +22,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.DisabledInNativeImage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
+import org.springframework.samples.petclinic.vet.Vet;
+import org.springframework.samples.petclinic.vet.VetRepository;
 import org.springframework.test.context.aot.DisabledInAotMode;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
@@ -51,6 +53,9 @@ class SearchControllerTests {
 	@MockitoBean
 	private OwnerRepository owners;
 
+	@MockitoBean
+	private VetRepository vets;
+
 	private Owner makeOwner(int id, String firstName, String lastName) {
 		Owner owner = new Owner();
 		owner.setId(id);
@@ -74,6 +79,14 @@ class SearchControllerTests {
 		return pet;
 	}
 
+	private Vet makeVet(int id, String firstName, String lastName) {
+		Vet vet = new Vet();
+		vet.setId(id);
+		vet.setFirstName(firstName);
+		vet.setLastName(lastName);
+		return vet;
+	}
+
 	@Test
 	void emptyQueryReturnsEmptyResults() throws Exception {
 		mockMvc.perform(get("/search").param("query", ""))
@@ -81,6 +94,7 @@ class SearchControllerTests {
 			.andExpect(view().name("search/searchResults"))
 			.andExpect(model().attribute("ownerResults", empty()))
 			.andExpect(model().attribute("petResults", empty()))
+			.andExpect(model().attribute("vetResults", empty()))
 			.andExpect(model().attribute("query", ""));
 	}
 
@@ -90,7 +104,8 @@ class SearchControllerTests {
 			.andExpect(status().isOk())
 			.andExpect(view().name("search/searchResults"))
 			.andExpect(model().attribute("ownerResults", empty()))
-			.andExpect(model().attribute("petResults", empty()));
+			.andExpect(model().attribute("petResults", empty()))
+			.andExpect(model().attribute("vetResults", empty()));
 	}
 
 	@Test
@@ -99,7 +114,8 @@ class SearchControllerTests {
 			.andExpect(status().isOk())
 			.andExpect(view().name("search/searchResults"))
 			.andExpect(model().attribute("ownerResults", empty()))
-			.andExpect(model().attribute("petResults", empty()));
+			.andExpect(model().attribute("petResults", empty()))
+			.andExpect(model().attribute("vetResults", empty()));
 	}
 
 	@Test
@@ -107,12 +123,14 @@ class SearchControllerTests {
 		Owner george = makeOwner(1, "George", "Franklin");
 		given(owners.searchByName(anyString())).willReturn(List.of(george));
 		given(owners.findOwnersByPetName(anyString())).willReturn(List.of());
+		given(vets.searchByName(anyString())).willReturn(List.of());
 
 		mockMvc.perform(get("/search").param("query", "George"))
 			.andExpect(status().isOk())
 			.andExpect(view().name("search/searchResults"))
 			.andExpect(model().attribute("ownerResults", hasSize(1)))
 			.andExpect(model().attribute("petResults", empty()))
+			.andExpect(model().attribute("vetResults", empty()))
 			.andExpect(model().attribute("query", "George"));
 	}
 
@@ -122,33 +140,51 @@ class SearchControllerTests {
 		makePet(1, "Max", george);
 		given(owners.searchByName(anyString())).willReturn(List.of());
 		given(owners.findOwnersByPetName(anyString())).willReturn(List.of(george));
+		given(vets.searchByName(anyString())).willReturn(List.of());
 
 		mockMvc.perform(get("/search").param("query", "Max"))
 			.andExpect(status().isOk())
 			.andExpect(view().name("search/searchResults"))
 			.andExpect(model().attribute("ownerResults", empty()))
-			.andExpect(model().attribute("petResults", hasSize(1)));
+			.andExpect(model().attribute("petResults", hasSize(1)))
+			.andExpect(model().attribute("vetResults", empty()));
+	}
+
+	@Test
+	void validQueryReturnsMatchingVets() throws Exception {
+		Vet helen = makeVet(1, "Helen", "Leary");
+		given(owners.searchByName(anyString())).willReturn(List.of());
+		given(owners.findOwnersByPetName(anyString())).willReturn(List.of());
+		given(vets.searchByName(anyString())).willReturn(List.of(helen));
+
+		mockMvc.perform(get("/search").param("query", "Helen"))
+			.andExpect(status().isOk())
+			.andExpect(view().name("search/searchResults"))
+			.andExpect(model().attribute("ownerResults", empty()))
+			.andExpect(model().attribute("petResults", empty()))
+			.andExpect(model().attribute("vetResults", hasSize(1)));
 	}
 
 	@Test
 	void validQueryReturnsNoResults() throws Exception {
 		given(owners.searchByName(anyString())).willReturn(List.of());
 		given(owners.findOwnersByPetName(anyString())).willReturn(List.of());
+		given(vets.searchByName(anyString())).willReturn(List.of());
 
 		mockMvc.perform(get("/search").param("query", "zzznomatch"))
 			.andExpect(status().isOk())
 			.andExpect(view().name("search/searchResults"))
 			.andExpect(model().attribute("ownerResults", empty()))
-			.andExpect(model().attribute("petResults", empty()));
+			.andExpect(model().attribute("petResults", empty()))
+			.andExpect(model().attribute("vetResults", empty()));
 	}
 
 	@Test
 	void wildcardCharactersInQueryAreEscaped() throws Exception {
 		given(owners.searchByName(anyString())).willReturn(List.of());
 		given(owners.findOwnersByPetName(anyString())).willReturn(List.of());
+		given(vets.searchByName(anyString())).willReturn(List.of());
 
-		// Query with SQL wildcards should not cause errors and should be handled
-		// gracefully
 		mockMvc.perform(get("/search").param("query", "%_test"))
 			.andExpect(status().isOk())
 			.andExpect(view().name("search/searchResults"));
@@ -161,6 +197,7 @@ class SearchControllerTests {
 		makePet(2, "Buddy", george);
 		given(owners.searchByName(anyString())).willReturn(List.of());
 		given(owners.findOwnersByPetName(anyString())).willReturn(List.of(george));
+		given(vets.searchByName(anyString())).willReturn(List.of());
 
 		mockMvc.perform(get("/search").param("query", "Max"))
 			.andExpect(status().isOk())
@@ -171,6 +208,7 @@ class SearchControllerTests {
 	void queryIsPreservedInModel() throws Exception {
 		given(owners.searchByName(anyString())).willReturn(List.of());
 		given(owners.findOwnersByPetName(anyString())).willReturn(List.of());
+		given(vets.searchByName(anyString())).willReturn(List.of());
 
 		mockMvc.perform(get("/search").param("query", "Franklin"))
 			.andExpect(status().isOk())
