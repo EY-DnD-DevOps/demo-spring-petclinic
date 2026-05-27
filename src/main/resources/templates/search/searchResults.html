@@ -87,6 +87,39 @@
     </table>
   </div>
 
+  <!-- Vets Section -->
+  <h3 class="pc-section-title mt-4">
+    <span class="fa fa-user-md me-2" aria-hidden="true"></span>
+    <span th:text="#{vets}">Veterinarians</span>
+  </h3>
+
+  <p th:if="${vetResults.isEmpty()}" th:text="#{noVetsFound}">No matching veterinarians found.</p>
+
+  <div th:unless="${vetResults.isEmpty()}" style="overflow-x: auto;">
+    <table class="table-modern table">
+      <thead>
+        <tr>
+          <th th:text="#{name}">Name</th>
+          <th th:text="#{specialties}">Specialties</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="vet : ${vetResults}">
+          <td>
+            <a th:href="@{/vets}" th:text="${vet.firstName + ' ' + vet.lastName}"
+              style="color: var(--pc-primary); font-weight:500; text-decoration:none;"></a>
+          </td>
+          <td>
+            <span th:if="${vet.nrOfSpecialties == 0}" th:text="#{none}">none</span>
+            <span th:each="specialty : ${vet.specialties}">
+              <span class="badge-specialty" th:text="${specialty.name}"></span>
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
 </body>
 
 </html>

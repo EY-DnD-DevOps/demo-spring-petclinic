@@ -17,14 +17,16 @@ package org.springframework.samples.petclinic.owner;
 
 import java.util.List;
 
+import org.springframework.samples.petclinic.vet.Vet;
+import org.springframework.samples.petclinic.vet.VetRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
- * Controller for the global search feature. Searches both owners (by first/last name) and
- * pets (by name) across the entire application.
+ * Controller for the global search feature. Searches owners (by first/last name), pets
+ * (by name), and vets (by first/last name) across the entire application.
  */
 @Controller
 class SearchController {
@@ -34,14 +36,18 @@ class SearchController {
 
 	private final OwnerRepository owners;
 
-	SearchController(OwnerRepository owners) {
+	private final VetRepository vets;
+
+	SearchController(OwnerRepository owners, VetRepository vets) {
 		this.owners = owners;
+		this.vets = vets;
 	}
 
 	@GetMapping("/search")
 	public String search(@RequestParam(defaultValue = "") String query, Model model) {
 		List<Owner> ownerResults = List.of();
 		List<PetResult> petResults = List.of();
+		List<Vet> vetResults = List.of();
 
 		if (!query.isBlank()) {
 			String escapedQuery = escapeWildcards(query);
@@ -50,10 +56,12 @@ class SearchController {
 				.stream()
 				.flatMap(owner -> owner.getPets().stream().map(pet -> new PetResult(pet, owner)))
 				.toList();
+			vetResults = vets.searchByName(escapedQuery);
 		}
 
 		model.addAttribute("ownerResults", ownerResults);
 		model.addAttribute("petResults", petResults);
+		model.addAttribute("vetResults", vetResults);
 		model.addAttribute("query", query);
 		return "search/searchResults";
 	}
