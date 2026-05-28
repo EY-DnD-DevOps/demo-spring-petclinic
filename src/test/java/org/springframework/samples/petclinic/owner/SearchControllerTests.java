@@ -34,6 +34,8 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -55,6 +57,9 @@ class SearchControllerTests {
 
 	@MockitoBean
 	private VetRepository vets;
+
+	@MockitoBean
+	private SearchKeywordRecorder recorder;
 
 	private Owner makeOwner(int id, String firstName, String lastName) {
 		Owner owner = new Owner();
@@ -213,6 +218,31 @@ class SearchControllerTests {
 		mockMvc.perform(get("/search").param("query", "Franklin"))
 			.andExpect(status().isOk())
 			.andExpect(model().attribute("query", is("Franklin")));
+	}
+
+	@Test
+	void should_recordKeyword_when_nonBlankQuerySubmitted() throws Exception {
+		given(owners.searchByName(anyString())).willReturn(List.of());
+		given(owners.findOwnersByPetName(anyString())).willReturn(List.of());
+		given(vets.searchByName(anyString())).willReturn(List.of());
+
+		mockMvc.perform(get("/search").param("query", "Fido")).andExpect(status().isOk());
+
+		verify(recorder).record("Fido");
+	}
+
+	@Test
+	void should_notRecordKeyword_when_emptyQuerySubmitted() throws Exception {
+		mockMvc.perform(get("/search").param("query", "")).andExpect(status().isOk());
+
+		verify(recorder, never()).record(anyString());
+	}
+
+	@Test
+	void should_notRecordKeyword_when_blankQuerySubmitted() throws Exception {
+		mockMvc.perform(get("/search").param("query", "   ")).andExpect(status().isOk());
+
+		verify(recorder, never()).record(anyString());
 	}
 
 }
