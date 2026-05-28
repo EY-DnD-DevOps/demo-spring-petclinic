@@ -17,16 +17,26 @@ package org.springframework.samples.petclinic.owner;
 
 import java.util.List;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Repository for {@link SearchKeyword} entities.
+ * REST API for querying search keyword statistics.
  */
-interface SearchKeywordRepository extends JpaRepository<SearchKeyword, Integer> {
+@RestController
+@RequestMapping("/api/search-keywords")
+class SearchKeywordController {
 
-	@Query("SELECT new org.springframework.samples.petclinic.owner.KeywordCount(sk.keyword, COUNT(sk)) "
-			+ "FROM SearchKeyword sk GROUP BY sk.keyword ORDER BY COUNT(sk) DESC")
-	List<KeywordCount> findKeywordSummary();
+	private final SearchKeywordRepository searchKeywords;
+
+	SearchKeywordController(SearchKeywordRepository searchKeywords) {
+		this.searchKeywords = searchKeywords;
+	}
+
+	@GetMapping("/summary")
+	List<KeywordCount> summary() {
+		return searchKeywords.findKeywordSummary();
+	}
 
 }

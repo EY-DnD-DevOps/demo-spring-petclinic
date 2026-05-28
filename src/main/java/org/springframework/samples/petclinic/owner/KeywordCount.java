@@ -15,18 +15,8 @@
  */
 package org.springframework.samples.petclinic.owner;
 
-import java.util.List;
-
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-
 /**
- * Repository for {@link SearchKeyword} entities.
+ * Projection representing the number of times a keyword has been searched.
  */
-interface SearchKeywordRepository extends JpaRepository<SearchKeyword, Integer> {
-
-	@Query("SELECT new org.springframework.samples.petclinic.owner.KeywordCount(sk.keyword, COUNT(sk)) "
-			+ "FROM SearchKeyword sk GROUP BY sk.keyword ORDER BY COUNT(sk) DESC")
-	List<KeywordCount> findKeywordSummary();
-
+record KeywordCount(String keyword, long count) {
 }
