@@ -53,3 +53,10 @@ CREATE TABLE IF NOT EXISTS visits (
   description VARCHAR(255),
   FOREIGN KEY (pet_id) REFERENCES pets(id)
 ) engine=InnoDB;
+
+CREATE TABLE IF NOT EXISTS search_keywords (
+  id          INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  keyword     VARCHAR(255) NOT NULL,
+  searched_at DATETIME     NOT NULL,
+  INDEX (keyword)
+) engine=InnoDB;

@@ -1,0 +1,51 @@
+/*
+ * Copyright 2012-2025 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.springframework.samples.petclinic.owner;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Component;
+
+/**
+ * Records search keywords asynchronously so that the user-facing search response is not
+ * delayed by the database write.
+ */
+@Component
+class SearchKeywordRecorder {
+
+	private static final Logger log = LoggerFactory.getLogger(SearchKeywordRecorder.class);
+
+	private static final int MAX_KEYWORD_LENGTH = 255;
+
+	private final SearchKeywordRepository searchKeywords;
+
+	SearchKeywordRecorder(SearchKeywordRepository searchKeywords) {
+		this.searchKeywords = searchKeywords;
+	}
+
+	@Async
+	void record(String keyword) {
+		String truncated = keyword.length() > MAX_KEYWORD_LENGTH ? keyword.substring(0, MAX_KEYWORD_LENGTH) : keyword;
+		try {
+			searchKeywords.save(new SearchKeyword(truncated));
+		}
+		catch (Exception ex) {
+			log.warn("Failed to record search keyword: {}", truncated, ex);
+		}
+	}
+
+}

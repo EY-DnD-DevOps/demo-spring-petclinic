@@ -38,9 +38,12 @@ class SearchController {
 
 	private final VetRepository vets;
 
-	SearchController(OwnerRepository owners, VetRepository vets) {
+	private final SearchKeywordRecorder recorder;
+
+	SearchController(OwnerRepository owners, VetRepository vets, SearchKeywordRecorder recorder) {
 		this.owners = owners;
 		this.vets = vets;
+		this.recorder = recorder;
 	}
 
 	@GetMapping("/search")
@@ -50,6 +53,7 @@ class SearchController {
 		List<Vet> vetResults = List.of();
 
 		if (!query.isBlank()) {
+			recorder.record(query);
 			String escapedQuery = escapeWildcards(query);
 			ownerResults = owners.searchByName(escapedQuery);
 			petResults = owners.findOwnersByPetName(escapedQuery)
