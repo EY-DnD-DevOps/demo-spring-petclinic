@@ -1,0 +1,39 @@
+name: Issue Progress Comment
+
+# 當 PR 合併時，自動在對應的 GitHub Issue 留下進度 comment
+# 前提：分支命名遵循 feature/GH-{#}-{slug} / fix/GH-{#}-{slug} / hotfix/GH-{#}-{slug}
+
+on:
+  pull_request:
+    types: [closed]
+
+permissions:
+  issues: write
+
+jobs:
+  notify-issue:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Extract issue number from branch name
+        id: extract_issue
+        run: |
+          BRANCH="${{ github.event.pull_request.head.ref }}"
+          ISSUE_NUM=$(echo "$BRANCH" | grep -oP '(?<=GH-)\d+' | head -1)
+          echo "issue_number=$ISSUE_NUM" >> $GITHUB_OUTPUT
+
+      - name: Post PR_MERGED comment to issue
+        if: steps.extract_issue.outputs.issue_number != ''
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh issue comment ${{ steps.extract_issue.outputs.issue_number }} \
+            --repo ${{ github.repository }} \
+            --body "<!-- gh-issue-workflow -->
+          🤖 **[WORKFLOW: PR_MERGED]**
+
+          PR #${{ github.event.pull_request.number }} 已合併至 \`${{ github.event.pull_request.base.ref }}\`
+
+          **合併者：** @${{ github.event.pull_request.merged_by.login }}
+          **合併時間：** ${{ github.event.pull_request.merged_at }}"
