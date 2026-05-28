@@ -15,6 +15,8 @@
  */
 package org.springframework.samples.petclinic.owner;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
@@ -25,6 +27,10 @@ import org.springframework.stereotype.Component;
 @Component
 class SearchKeywordRecorder {
 
+	private static final Logger log = LoggerFactory.getLogger(SearchKeywordRecorder.class);
+
+	private static final int MAX_KEYWORD_LENGTH = 255;
+
 	private final SearchKeywordRepository searchKeywords;
 
 	SearchKeywordRecorder(SearchKeywordRepository searchKeywords) {
@@ -33,7 +39,13 @@ class SearchKeywordRecorder {
 
 	@Async
 	void record(String keyword) {
-		searchKeywords.save(new SearchKeyword(keyword));
+		String truncated = keyword.length() > MAX_KEYWORD_LENGTH ? keyword.substring(0, MAX_KEYWORD_LENGTH) : keyword;
+		try {
+			searchKeywords.save(new SearchKeyword(truncated));
+		}
+		catch (Exception ex) {
+			log.warn("Failed to record search keyword: {}", truncated, ex);
+		}
 	}
 
 }
