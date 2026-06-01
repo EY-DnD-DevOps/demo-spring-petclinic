@@ -17,6 +17,7 @@ package org.springframework.samples.petclinic.owner;
 
 import java.util.List;
 
+import org.springframework.samples.petclinic.system.ApiResponse;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,8 +36,8 @@ class SearchKeywordController {
 	}
 
 	@GetMapping("/summary")
-	List<KeywordCount> summary() {
-		return searchKeywords.findKeywordSummary();
+	ApiResponse<List<KeywordCount>> summary() {
+		return ApiResponse.success(searchKeywords.findKeywordSummary());
 	}
 
 }

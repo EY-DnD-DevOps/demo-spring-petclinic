@@ -56,11 +56,14 @@ class SearchKeywordControllerTests {
 		mockMvc.perform(get("/api/search-keywords/summary"))
 			.andExpect(status().isOk())
 			.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-			.andExpect(jsonPath("$", hasSize(2)))
-			.andExpect(jsonPath("$[0].keyword", is("cat")))
-			.andExpect(jsonPath("$[0].count", is(5)))
-			.andExpect(jsonPath("$[1].keyword", is("dog")))
-			.andExpect(jsonPath("$[1].count", is(3)));
+			.andExpect(jsonPath("$.success").value(true))
+			.andExpect(jsonPath("$.error").doesNotExist())
+			.andExpect(jsonPath("$.timestamp").isNotEmpty())
+			.andExpect(jsonPath("$.data", hasSize(2)))
+			.andExpect(jsonPath("$.data[0].keyword", is("cat")))
+			.andExpect(jsonPath("$.data[0].count", is(5)))
+			.andExpect(jsonPath("$.data[1].keyword", is("dog")))
+			.andExpect(jsonPath("$.data[1].count", is(3)));
 	}
 
 	@Test
@@ -70,7 +73,8 @@ class SearchKeywordControllerTests {
 		mockMvc.perform(get("/api/search-keywords/summary"))
 			.andExpect(status().isOk())
 			.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-			.andExpect(jsonPath("$", hasSize(0)));
+			.andExpect(jsonPath("$.success").value(true))
+			.andExpect(jsonPath("$.data", hasSize(0)));
 	}
 
 }
