@@ -28,6 +28,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.nullValue;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -57,7 +58,7 @@ class SearchKeywordControllerTests {
 			.andExpect(status().isOk())
 			.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
 			.andExpect(jsonPath("$.success").value(true))
-			.andExpect(jsonPath("$.error").doesNotExist())
+			.andExpect(jsonPath("$.error").value(nullValue()))
 			.andExpect(jsonPath("$.timestamp").isNotEmpty())
 			.andExpect(jsonPath("$.data", hasSize(2)))
 			.andExpect(jsonPath("$.data[0].keyword", is("cat")))

@@ -29,12 +29,12 @@ class GlobalExceptionHandlerTests {
 	}
 
 	@Test
-	void should_useExceptionClassNameAsType_when_differentExceptionTypes() {
-		IllegalArgumentException ex = new IllegalArgumentException("bad argument");
+	void should_useClassNameAsDetail_when_exceptionMessageIsNull() {
+		NullPointerException ex = new NullPointerException();
 
 		ApiResponse<Void> response = handler.handleException(ex);
 
-		assertThat(response.error().type()).isEqualTo("IllegalArgumentException");
+		assertThat(response.error().detail()).isEqualTo(NullPointerException.class.getName());
 	}
 
 }

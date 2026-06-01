@@ -18,8 +18,9 @@ class GlobalExceptionHandler {
 	@ExceptionHandler(Exception.class)
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	ApiResponse<Void> handleException(Exception ex) {
+		String detail = ex.getMessage() != null ? ex.getMessage() : ex.getClass().getName();
 		ApiErrorDetail errorDetail = new ApiErrorDetail("INTERNAL_SERVER_ERROR", ex.getClass().getSimpleName(),
-				"伺服器發生未預期的錯誤，請稍後再試", ex.getMessage(), UUID.randomUUID().toString());
+				"伺服器發生未預期的錯誤，請稍後再試", detail, UUID.randomUUID().toString());
 		return ApiResponse.error(errorDetail);
 	}
 
