@@ -13,31 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.samples.petclinic.owner;
-
-import java.util.List;
+package org.springframework.samples.petclinic.vet;
 
 import org.springframework.samples.petclinic.system.ApiResponse;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * REST API for querying search keyword statistics.
+ * REST API controller for vet resources.
  */
 @RestController
-@RequestMapping("/api/search-keywords")
-class SearchKeywordController {
+class VetApiController {
 
-	private final SearchKeywordRepository searchKeywords;
+	private final VetRepository vetRepository;
 
-	SearchKeywordController(SearchKeywordRepository searchKeywords) {
-		this.searchKeywords = searchKeywords;
+	VetApiController(VetRepository vetRepository) {
+		this.vetRepository = vetRepository;
 	}
 
-	@GetMapping("/summary")
-	ApiResponse<List<KeywordCount>> summary() {
-		return ApiResponse.success(searchKeywords.findKeywordSummary());
+	@GetMapping("/vets")
+	ApiResponse<Vets> showResourcesVetList() {
+		Vets vets = new Vets();
+		vets.getVetList().addAll(this.vetRepository.findAll());
+		return ApiResponse.success(vets);
 	}
 
 }
