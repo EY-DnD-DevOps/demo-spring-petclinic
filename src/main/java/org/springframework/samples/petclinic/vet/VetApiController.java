@@ -40,8 +40,8 @@ class VetApiController {
 	}
 
 	@GetMapping
-	ApiResponse<Page<Vet>> showResourcesVetList(@RequestParam(defaultValue = "1") int page) {
-		Pageable pageable = PageRequest.of(page - 1, PAGE_SIZE);
+	ApiResponse<Page<Vet>> showResourcesVetList(@RequestParam(defaultValue = "0") int page) {
+		Pageable pageable = PageRequest.of(page, PAGE_SIZE);
 		return ApiResponse.success(vetRepository.findAll(pageable));
 	}
 

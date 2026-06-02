@@ -55,8 +55,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             <td>${visits}</td>
             <td>
               <div class="d-flex gap-2 flex-wrap">
-                <a class="btn btn-sm btn-outline-primary" href="/pet-form.html?ownerId=${currentOwnerId}&petId=${pet.id}">Edit Pet</a>
-                <a class="btn btn-sm btn-primary" href="/visit-form.html?ownerId=${currentOwnerId}&petId=${pet.id}">Add Visit</a>
+                <a class="btn btn-sm btn-outline-primary" href="/pet-form.html?ownerId=${escapeHtml(String(currentOwnerId))}&petId=${escapeHtml(String(pet.id))}">Edit Pet</a>
+                <a class="btn btn-sm btn-primary" href="/visit-form.html?ownerId=${escapeHtml(String(currentOwnerId))}&petId=${escapeHtml(String(pet.id))}">Add Visit</a>
               </div>
             </td>
           </tr>

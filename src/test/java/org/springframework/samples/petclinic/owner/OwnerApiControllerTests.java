@@ -60,7 +60,7 @@ class OwnerApiControllerTests {
 		given(ownerRepository.findByLastNameStartingWith(anyString(), any()))
 			.willReturn(new PageImpl<>(List.of(testOwner), PageRequest.of(0, 5), 1));
 
-		mockMvc.perform(get("/api/owners").param("lastName", "Franklin").param("page", "1"))
+		mockMvc.perform(get("/api/owners").param("lastName", "Franklin").param("page", "0"))
 			.andExpect(status().isOk())
 			.andExpect(jsonPath("$.success").value(true))
 			.andExpect(jsonPath("$.data.content[0].lastName").value("Franklin"));

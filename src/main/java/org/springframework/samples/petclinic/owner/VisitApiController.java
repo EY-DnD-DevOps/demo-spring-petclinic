@@ -1,5 +1,7 @@
 package org.springframework.samples.petclinic.owner;
 
+import jakarta.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.samples.petclinic.system.ApiResponse;
@@ -22,7 +24,7 @@ class VisitApiController {
 
 	@PostMapping("/api/owners/{ownerId}/pets/{petId}/visits")
 	ResponseEntity<ApiResponse<Owner>> createVisit(@PathVariable int ownerId, @PathVariable int petId,
-			@RequestBody Visit visit) {
+			@Valid @RequestBody Visit visit) {
 		Owner owner = owners.findById(ownerId)
 			.orElseThrow(() -> new IllegalArgumentException("Owner not found with id: " + ownerId));
 		Pet pet = owner.getPet(petId);

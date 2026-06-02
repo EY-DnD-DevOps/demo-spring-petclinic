@@ -1,5 +1,6 @@
 package org.springframework.samples.petclinic.owner;
 
+import jakarta.validation.Valid;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -33,7 +34,7 @@ class PetApiController {
 	}
 
 	@PostMapping("/api/owners/{ownerId}/pets")
-	ResponseEntity<ApiResponse<Owner>> createPet(@PathVariable int ownerId, @RequestBody Pet pet) {
+	ResponseEntity<ApiResponse<Owner>> createPet(@PathVariable int ownerId, @Valid @RequestBody Pet pet) {
 		Owner owner = owners.findById(ownerId)
 			.orElseThrow(() -> new IllegalArgumentException("Owner not found with id: " + ownerId));
 		pet.setId(null);

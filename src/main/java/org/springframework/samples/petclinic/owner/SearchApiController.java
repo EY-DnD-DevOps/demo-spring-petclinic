@@ -45,7 +45,10 @@ class SearchApiController {
 		List<Owner> ownerResults = owners.searchByName(escaped);
 		List<PetResult> petResults = owners.findOwnersByPetName(escaped)
 			.stream()
-			.flatMap(owner -> owner.getPets().stream().map(pet -> new PetResult(pet, owner)))
+			.flatMap(owner -> owner.getPets()
+				.stream()
+				.filter(pet -> pet.getName() != null && pet.getName().toLowerCase().contains(query.toLowerCase()))
+				.map(pet -> new PetResult(pet, owner)))
 			.toList();
 		List<Vet> vetResults = vets.searchByName(escaped);
 

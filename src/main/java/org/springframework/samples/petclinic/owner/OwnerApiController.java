@@ -34,8 +34,8 @@ class OwnerApiController {
 
 	@GetMapping
 	ApiResponse<Page<Owner>> listOwners(@RequestParam(defaultValue = "") String lastName,
-			@RequestParam(defaultValue = "1") int page) {
-		Pageable pageable = PageRequest.of(page - 1, PAGE_SIZE);
+			@RequestParam(defaultValue = "0") int page) {
+		Pageable pageable = PageRequest.of(page, PAGE_SIZE);
 		Page<Owner> result = owners.findByLastNameStartingWith(lastName, pageable);
 		return ApiResponse.success(result);
 	}

@@ -75,7 +75,7 @@ class VetApiControllerTests {
 
 	@Test
 	void should_supportPagination_when_pageParamProvided() throws Exception {
-		mockMvc.perform(get("/api/vets").param("page", "1").accept(MediaType.APPLICATION_JSON))
+		mockMvc.perform(get("/api/vets").param("page", "0").accept(MediaType.APPLICATION_JSON))
 			.andExpect(status().isOk())
 			.andExpect(jsonPath("$.success").value(true))
 			.andExpect(jsonPath("$.data.totalElements").value(1));

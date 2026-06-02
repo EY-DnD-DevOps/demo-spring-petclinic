@@ -99,9 +99,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                   : escapeHtml(`${pet.owner?.firstName || ''} ${pet.owner?.lastName || ''}`.trim() || '-');
                 return `
                   <tr>
-                    <td>${escapeHtml(pet.name || '')}</td>
-                    <td>${escapeHtml(pet.type?.name || pet.typeName || '')}</td>
-                    <td>${escapeHtml(pet.birthDate || '')}</td>
+                    <td>${escapeHtml(pet.pet?.name || '')}</td>
+                    <td>${escapeHtml(pet.pet?.type?.name || pet.typeName || '')}</td>
+                    <td>${escapeHtml(pet.pet?.birthDate || '')}</td>
                     <td>${ownerLink}</td>
                   </tr>
                 `;
