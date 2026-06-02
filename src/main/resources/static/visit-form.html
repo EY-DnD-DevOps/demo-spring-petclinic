@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Visit Form - PetClinic</title>
+  <link rel="shortcut icon" href="/resources/images/favicon.png">
+  <link rel="stylesheet" href="/webjars/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/resources/css/petclinic.css">
+</head>
+<body>
+  <nav id="main-nav"></nav>
+  <div class="container-fluid">
+    <div class="container xd-container">
+      <div id="alert-container"></div>
+      <div class="pc-card">
+        <div class="d-flex justify-content-between align-items-center mb-4 gap-3 flex-wrap">
+          <div>
+            <h1 class="pc-section-title">Add Visit</h1>
+            <p class="text-muted mb-0">Record a new visit for the selected pet.</p>
+          </div>
+          <a id="back-to-owner-link" class="btn btn-outline-secondary" href="/owners.html">Back to Owner</a>
+        </div>
+        <form id="visit-form" class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label" for="date">Date</label>
+            <input class="form-control" id="date" name="date" type="date" required>
+          </div>
+          <div class="col-12">
+            <label class="form-label" for="description">Description</label>
+            <textarea class="form-control" id="description" name="description" rows="4" required></textarea>
+          </div>
+          <div class="col-12">
+            <button class="btn btn-primary" type="submit">Add Visit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <footer class="pc-footer">
+    &copy; 2025 Spring PetClinic
+  </footer>
+  <script src="/webjars/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/layout.js"></script>
+  <script src="/js/visit-form.js"></script>
+</body>
+</html>

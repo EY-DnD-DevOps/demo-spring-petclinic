@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Owners - PetClinic</title>
+  <link rel="shortcut icon" href="/resources/images/favicon.png">
+  <link rel="stylesheet" href="/webjars/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/resources/css/petclinic.css">
+</head>
+<body>
+  <nav id="main-nav"></nav>
+  <div class="container-fluid">
+    <div class="container xd-container">
+      <div id="alert-container"></div>
+      <div class="d-flex flex-column flex-lg-row align-items-lg-center justify-content-between gap-3 mb-4">
+        <div>
+          <h1 class="pc-section-title">Find Owners</h1>
+          <p class="text-muted mb-0">Search owners by last name and browse paginated results.</p>
+        </div>
+        <a class="btn btn-primary" href="/owner-form.html">Add Owner</a>
+      </div>
+      <div class="pc-card">
+        <form id="owners-search-form" class="row g-3 align-items-end">
+          <div class="col-md-8 col-lg-6">
+            <label class="form-label" for="lastName">Last Name</label>
+            <input class="form-control" id="lastName" name="lastName" type="text" placeholder="Enter last name">
+          </div>
+          <div class="col-md-4 col-lg-3">
+            <button class="btn btn-primary w-100" type="submit">Find Owner</button>
+          </div>
+        </form>
+      </div>
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="mb-0">Results</h2>
+        <span id="owners-summary" class="text-muted"></span>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-modern">
+          <thead>
+            <tr>
+              <th>Last Name</th>
+              <th>First Name</th>
+              <th>Address</th>
+              <th>City</th>
+              <th>Phone</th>
+              <th>Pets</th>
+            </tr>
+          </thead>
+          <tbody id="owners-table-body">
+            <tr><td colspan="6" class="text-center text-muted">Loading...</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div id="owners-pagination" class="pc-pagination"></div>
+    </div>
+  </div>
+  <footer class="pc-footer">
+    &copy; 2025 Spring PetClinic
+  </footer>
+  <script src="/webjars/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/layout.js"></script>
+  <script src="/js/owners.js"></script>
+</body>
+</html>

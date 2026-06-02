@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Veterinarians - PetClinic</title>
+  <link rel="shortcut icon" href="/resources/images/favicon.png">
+  <link rel="stylesheet" href="/webjars/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/resources/css/petclinic.css">
+</head>
+<body>
+  <nav id="main-nav"></nav>
+  <div class="container-fluid">
+    <div class="container xd-container">
+      <div id="alert-container"></div>
+      <div class="mb-4">
+        <h1 class="pc-section-title">Veterinarians</h1>
+        <p class="text-muted mb-0">Browse veterinarians and their specialties.</p>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-modern">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Specialties</th>
+            </tr>
+          </thead>
+          <tbody id="vets-table-body">
+            <tr><td colspan="2" class="text-center text-muted">Loading...</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div id="vets-pagination" class="pc-pagination"></div>
+    </div>
+  </div>
+  <footer class="pc-footer">
+    &copy; 2025 Spring PetClinic
+  </footer>
+  <script src="/webjars/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/layout.js"></script>
+  <script src="/js/vets.js"></script>
+</body>
+</html>

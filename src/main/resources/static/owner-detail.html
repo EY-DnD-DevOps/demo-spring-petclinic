@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Owner Details - PetClinic</title>
+  <link rel="shortcut icon" href="/resources/images/favicon.png">
+  <link rel="stylesheet" href="/webjars/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/resources/css/petclinic.css">
+</head>
+<body>
+  <nav id="main-nav"></nav>
+  <div class="container-fluid">
+    <div class="container xd-container">
+      <div id="alert-container"></div>
+      <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-3 mb-4">
+        <div>
+          <h1 class="pc-section-title">Owner Information</h1>
+          <p class="text-muted mb-0">Review owner details, pets, and visit history.</p>
+        </div>
+        <div class="d-flex gap-2 flex-wrap">
+          <a id="edit-owner-link" class="btn btn-outline-primary" href="#">Edit Owner</a>
+          <a id="add-pet-link" class="btn btn-primary" href="#">Add New Pet</a>
+        </div>
+      </div>
+      <div class="pc-card mb-4">
+        <div class="row g-4">
+          <div class="col-md-6 col-lg-3">
+            <div class="info-label">Name</div>
+            <div id="owner-name" class="info-value">-</div>
+          </div>
+          <div class="col-md-6 col-lg-3">
+            <div class="info-label">Address</div>
+            <div id="owner-address" class="info-value">-</div>
+          </div>
+          <div class="col-md-6 col-lg-3">
+            <div class="info-label">City</div>
+            <div id="owner-city" class="info-value">-</div>
+          </div>
+          <div class="col-md-6 col-lg-3">
+            <div class="info-label">Phone</div>
+            <div id="owner-phone" class="info-value">-</div>
+          </div>
+        </div>
+      </div>
+      <section>
+        <h2 class="mb-3">Pets and Visits</h2>
+        <div class="table-responsive">
+          <table class="table table-modern">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Birth Date</th>
+                <th>Type</th>
+                <th>Visits</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="pets-table-body">
+              <tr><td colspan="5" class="text-center text-muted">Loading...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </div>
+  <footer class="pc-footer">
+    &copy; 2025 Spring PetClinic
+  </footer>
+  <script src="/webjars/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/layout.js"></script>
+  <script src="/js/owner-detail.js"></script>
+</body>
+</html>

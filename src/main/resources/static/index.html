@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Home - PetClinic</title>
+  <link rel="shortcut icon" href="/resources/images/favicon.png">
+  <link rel="stylesheet" href="/webjars/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/resources/css/petclinic.css">
+</head>
+<body>
+  <nav id="main-nav"></nav>
+  <div class="container-fluid">
+    <div class="container xd-container">
+      <div id="alert-container"></div>
+      <section class="pc-hero">
+        <div class="row align-items-center g-4">
+          <div class="col-lg-8">
+            <h2>Welcome to PetClinic</h2>
+            <p>Manage owners, pets, visits, and veterinarians with the new API-driven UI.</p>
+          </div>
+          <div class="col-lg-4 text-center">
+            <img class="pc-hero-img" src="/resources/images/pets.png" alt="Pets">
+          </div>
+        </div>
+      </section>
+      <section>
+        <div class="row g-4">
+          <div class="col-md-4">
+            <div class="pc-card h-100">
+              <h3>Find Owners</h3>
+              <p>Search existing owners and review pets and visit history.</p>
+              <a class="btn btn-primary" href="/owners.html">Open Owners</a>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="pc-card h-100">
+              <h3>Veterinarians</h3>
+              <p>Browse veterinarians and their specialties in a paginated list.</p>
+              <a class="btn btn-primary" href="/vets.html">View Vets</a>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="pc-card h-100">
+              <h3>Register Owner</h3>
+              <p>Create a new owner profile and start managing their pets.</p>
+              <a class="btn btn-primary" href="/owner-form.html">Add Owner</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+  <footer class="pc-footer">
+    &copy; 2025 Spring PetClinic
+  </footer>
+  <script src="/webjars/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/layout.js"></script>
+  <script src="/js/home.js"></script>
+</body>
+</html>

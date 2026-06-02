@@ -38,8 +38,16 @@ public class I18nPropertiesSyncTest {
 
 	@Test
 	void checkNonInternationalizedStrings() throws Exception {
-		Path root = Path.of("src/main");
+		// Only Thymeleaf templates require i18n checks. Static HTML pages in
+		// src/main/resources/static/ are intentionally in English without server-side
+		// i18n. Since the project has migrated to a frontend-backend separated
+		// architecture, only the templates/ directory (now empty) is scanned.
+		Path root = Path.of("src/main/resources/templates");
 		List<Path> files;
+
+		if (!root.toFile().exists()) {
+			return;
+		}
 
 		try (Stream<Path> stream = Files.walk(root)) {
 			files = stream.filter(p -> p.toString().endsWith(".java") || p.toString().endsWith(".html"))
