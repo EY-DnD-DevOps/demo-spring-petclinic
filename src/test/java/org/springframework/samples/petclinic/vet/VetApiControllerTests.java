@@ -15,18 +15,23 @@
  */
 package org.springframework.samples.petclinic.vet;
 
+import java.util.List;
+
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.DisabledInNativeImage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.aot.DisabledInAotMode;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.hamcrest.Matchers.nullValue;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -54,18 +59,26 @@ class VetApiControllerTests {
 		james.setLastName("Carter");
 		james.setId(1);
 
-		given(this.vets.findAll()).willReturn(Lists.newArrayList(james));
+		given(this.vets.findAll(any())).willReturn(new PageImpl<>(Lists.newArrayList(james), PageRequest.of(0, 5), 1));
 	}
 
 	@Test
 	void should_returnApiResponseWithVetList_when_requestingVetsJson() throws Exception {
-		mockMvc.perform(get("/vets").accept(MediaType.APPLICATION_JSON))
+		mockMvc.perform(get("/api/vets").accept(MediaType.APPLICATION_JSON))
 			.andExpect(status().isOk())
 			.andExpect(content().contentType(MediaType.APPLICATION_JSON))
 			.andExpect(jsonPath("$.success").value(true))
 			.andExpect(jsonPath("$.error").value(nullValue()))
 			.andExpect(jsonPath("$.timestamp").isNotEmpty())
-			.andExpect(jsonPath("$.data.vetList[0].id").value(1));
+			.andExpect(jsonPath("$.data.content[0].id").value(1));
+	}
+
+	@Test
+	void should_supportPagination_when_pageParamProvided() throws Exception {
+		mockMvc.perform(get("/api/vets").param("page", "0").accept(MediaType.APPLICATION_JSON))
+			.andExpect(status().isOk())
+			.andExpect(jsonPath("$.success").value(true))
+			.andExpect(jsonPath("$.data.totalElements").value(1));
 	}
 
 }

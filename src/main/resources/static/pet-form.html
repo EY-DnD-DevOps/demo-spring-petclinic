@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pet Form - PetClinic</title>
+  <link rel="shortcut icon" href="/resources/images/favicon.png">
+  <link rel="stylesheet" href="/webjars/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/resources/css/petclinic.css">
+</head>
+<body>
+  <nav id="main-nav"></nav>
+  <div class="container-fluid">
+    <div class="container xd-container">
+      <div id="alert-container"></div>
+      <div class="pc-card">
+        <div class="d-flex justify-content-between align-items-center mb-4 gap-3 flex-wrap">
+          <div>
+            <h1 id="page-title" class="pc-section-title">Add Pet</h1>
+            <p id="page-description" class="text-muted mb-0">Create a pet record for the selected owner.</p>
+          </div>
+          <a id="back-to-owner-link" class="btn btn-outline-secondary" href="/owners.html">Back to Owner</a>
+        </div>
+        <form id="pet-form" class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label" for="name">Name</label>
+            <input class="form-control" id="name" name="name" type="text" required>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label" for="birthDate">Birth Date</label>
+            <input class="form-control" id="birthDate" name="birthDate" type="date" required>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label" for="typeId">Type</label>
+            <select class="form-select" id="typeId" name="typeId" required>
+              <option value="">Loading pet types...</option>
+            </select>
+          </div>
+          <div class="col-12">
+            <button id="submit-button" class="btn btn-primary" type="submit">Add Pet</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <footer class="pc-footer">
+    &copy; 2025 Spring PetClinic
+  </footer>
+  <script src="/webjars/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/layout.js"></script>
+  <script src="/js/pet-form.js"></script>
+</body>
+</html>
