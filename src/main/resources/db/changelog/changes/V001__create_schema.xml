@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="V001-h2-schema" author="petclinic" dbms="h2">
+    <sqlFile path="db/h2/schema.sql" encoding="UTF-8" splitStatements="true" stripComments="true"/>
+  </changeSet>
+
+  <changeSet id="V001-mysql-schema" author="petclinic" dbms="mysql">
+    <sqlFile path="db/mysql/schema.sql" encoding="UTF-8" splitStatements="true" stripComments="true"/>
+  </changeSet>
+
+  <changeSet id="V001-postgresql-schema" author="petclinic" dbms="postgresql">
+    <sqlFile path="db/postgres/schema.sql" encoding="UTF-8" splitStatements="true" stripComments="true"/>
+  </changeSet>
+
+</databaseChangeLog>
