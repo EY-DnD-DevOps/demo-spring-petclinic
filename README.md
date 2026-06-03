@@ -75,6 +75,17 @@ docker run -e POSTGRES_USER=petclinic -e POSTGRES_PASSWORD=petclinic -e POSTGRES
 Further documentation is provided for [MySQL](https://github.com/spring-projects/spring-petclinic/blob/main/src/main/resources/db/mysql/petclinic_db_setup_mysql.txt)
 and [PostgreSQL](https://github.com/spring-projects/spring-petclinic/blob/main/src/main/resources/db/postgres/petclinic_db_setup_postgres.txt).
 
+### Database migrations with Liquibase
+
+This project uses [Liquibase](https://www.liquibase.org/) to manage database schema and seed data. Liquibase tracks which changesets have already been executed in a `DATABASECHANGELOG` table and only runs each changeset once.
+
+**Important behaviour difference from previous versions:** In earlier versions, seed data was re-inserted on every startup (idempotently). With Liquibase, seed data is only inserted once. If you manually delete data from a MySQL or PostgreSQL database and want to restore the seed data, you can either:
+
+- **Drop and recreate the database** — then restart the application; Liquibase will run all changesets from scratch.
+- **Delete the `DATABASECHANGELOG` table** — this causes Liquibase to treat all changesets as new and re-execute them (only safe if the database is otherwise empty).
+
+H2 in-memory databases are unaffected because the entire database is recreated on every application startup.
+
 Instead of vanilla `docker` you can also use the provided `docker-compose.yml` file to start the database containers. Each one has a service named after the Spring profile:
 
 ```bash
