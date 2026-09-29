@@ -23,8 +23,8 @@ jobs:
 
       - name: Upload Coverage
         run: |
-          curl -s -X POST "http://23.100.110.236:12345/api/v1/coverage" \
-            -H "Authorization: Bearer fe8f4cfc0ec6c1bdc8d61e5d7f6407096871ba86ef163a9abb3398972f9d35e5" \
+          curl -s -X POST "${{ vars.COVERAGE_PLATFORM_URL }}/api/v1/coverage" \
+            -H "Authorization: Bearer ${{ secrets.COVERAGE_TOKEN }}" \
             -F "file=@target/site/jacoco/jacoco.xml" \
             -F "repo_name=${{ github.repository }}" \
             -F "branch=${{ github.ref_name }}" \
