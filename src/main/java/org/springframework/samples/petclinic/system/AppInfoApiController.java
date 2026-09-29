@@ -20,7 +20,7 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
 import org.springframework.beans.factory.ObjectProvider;
-import org.springframework.boot.info.BuildProperties;
+import org.springframework.boot.info.GitProperties;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,17 +35,17 @@ class AppInfoApiController {
 	private static final DateTimeFormatter LAST_UPDATED_FORMAT = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm")
 		.withZone(ZoneId.of("Asia/Taipei"));
 
-	private final ObjectProvider<BuildProperties> buildProperties;
+	private final ObjectProvider<GitProperties> gitProperties;
 
-	AppInfoApiController(ObjectProvider<BuildProperties> buildProperties) {
-		this.buildProperties = buildProperties;
+	AppInfoApiController(ObjectProvider<GitProperties> gitProperties) {
+		this.gitProperties = gitProperties;
 	}
 
 	@GetMapping
 	ApiResponse<AppInfo> showAppInfo() {
-		BuildProperties build = this.buildProperties.getIfAvailable();
-		Instant buildTime = (build != null) ? build.getTime() : null;
-		String lastUpdatedAt = (buildTime != null) ? LAST_UPDATED_FORMAT.format(buildTime) : null;
+		GitProperties git = this.gitProperties.getIfAvailable();
+		Instant commitTime = (git != null) ? git.getCommitTime() : null;
+		String lastUpdatedAt = (commitTime != null) ? LAST_UPDATED_FORMAT.format(commitTime) : null;
 		return ApiResponse.success(new AppInfo(lastUpdatedAt));
 	}
 

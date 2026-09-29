@@ -18,8 +18,8 @@ package org.springframework.samples.petclinic.system;
 /**
  * Application information exposed to the frontend footer.
  *
- * @param lastUpdatedAt build time formatted as {@code yyyy/MM/dd HH:mm}, or {@code null}
- * when build information is unavailable
+ * @param lastUpdatedAt last commit time formatted as {@code yyyy/MM/dd HH:mm}, or
+ * {@code null} when git information is unavailable
  */
 public record AppInfo(String lastUpdatedAt) {
 

@@ -21,7 +21,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.DisabledInNativeImage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.support.StaticListableBeanFactory;
-import org.springframework.boot.info.BuildProperties;
+import org.springframework.boot.info.GitProperties;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.aot.DisabledInAotMode;
@@ -48,11 +48,11 @@ class AppInfoApiControllerTests {
 	private MockMvc mockMvc;
 
 	@MockitoBean
-	private BuildProperties buildProperties;
+	private GitProperties gitProperties;
 
 	@Test
-	void should_returnFormattedLastUpdatedAt_when_buildInfoExists() throws Exception {
-		given(this.buildProperties.getTime()).willReturn(Instant.parse("2026-09-29T06:30:00Z"));
+	void should_returnFormattedLastUpdatedAt_when_gitInfoExists() throws Exception {
+		given(this.gitProperties.getCommitTime()).willReturn(Instant.parse("2026-09-29T06:30:00Z"));
 
 		mockMvc.perform(get("/api/app-info").accept(MediaType.APPLICATION_JSON))
 			.andExpect(status().isOk())
@@ -63,8 +63,8 @@ class AppInfoApiControllerTests {
 	}
 
 	@Test
-	void should_returnNullLastUpdatedAt_when_buildTimeMissing() throws Exception {
-		given(this.buildProperties.getTime()).willReturn(null);
+	void should_returnNullLastUpdatedAt_when_commitTimeMissing() throws Exception {
+		given(this.gitProperties.getCommitTime()).willReturn(null);
 
 		mockMvc.perform(get("/api/app-info").accept(MediaType.APPLICATION_JSON))
 			.andExpect(status().isOk())
@@ -73,9 +73,9 @@ class AppInfoApiControllerTests {
 	}
 
 	@Test
-	void should_returnNullLastUpdatedAt_when_buildInfoMissing() {
+	void should_returnNullLastUpdatedAt_when_gitInfoMissing() {
 		AppInfoApiController controller = new AppInfoApiController(
-				new StaticListableBeanFactory().getBeanProvider(BuildProperties.class));
+				new StaticListableBeanFactory().getBeanProvider(GitProperties.class));
 
 		ApiResponse<AppInfo> response = controller.showAppInfo();
 
