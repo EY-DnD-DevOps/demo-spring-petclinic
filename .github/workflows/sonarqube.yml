@@ -1,0 +1,48 @@
+name: SonarQube analysis
+
+# Test branch only for now. Final template will also run on main and on pull requests.
+on:
+  push:
+    branches: [ ci/sonarqube-test ]
+
+permissions:
+  contents: read
+
+jobs:
+  sonar:
+    runs-on: ubuntu-latest
+    env:
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+    steps:
+      - name: Check SonarQube secrets
+        id: check
+        run: |
+          if [ -z "$SONAR_TOKEN" ] || [ -z "$SONAR_HOST_URL" ]; then
+            echo "SONAR_TOKEN / SONAR_HOST_URL not set, skipping analysis"
+            echo "run=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "run=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/checkout@v4
+        if: steps.check.outputs.run == 'true'
+        with:
+          fetch-depth: 0   # full history, needed by SonarQube for blame / new code detection
+
+      - name: Set up JDK 17
+        if: steps.check.outputs.run == 'true'
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: temurin
+          cache: maven
+
+      - name: Build and analyze
+        if: steps.check.outputs.run == 'true'
+        run: >
+          ./mvnw -B -DskipTests verify
+          org.sonarsource.scanner.maven:sonar-maven-plugin:5.1.0.4751:sonar
+          -Dsonar.projectKey=mtel-${{ github.event.repository.name }}
+          -Dsonar.projectName=${{ github.event.repository.name }}
+          -Dsonar.host.url="$SONAR_HOST_URL"
